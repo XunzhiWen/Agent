@@ -7,6 +7,9 @@ def main():
     print("Type 'exit' to quit.")
     print("-" * 50)
 
+    # Define a thread_id to persist state across the session
+    config = {"configurable": {"thread_id": "1"}}
+
     while True:
         try:
             user_input = input("You: ")
@@ -17,12 +20,11 @@ def main():
             if not user_input.strip():
                 continue
 
-            # Run the graph
+            # Run the graph with config
             inputs = {"messages": [HumanMessage(content=user_input)]}
             
-            # Stream the output to see intermediate steps
             print("Agent is thinking...")
-            for output in app.stream(inputs):
+            for output in app.stream(inputs, config=config):
                 for key, value in output.items():
                     print(f"Node '{key}':")
                     # Extract and print the last message content
@@ -34,20 +36,11 @@ def main():
                              print(f"Calling Tool: {last_msg.tool_calls[0]['name']}")
                     print("---")
             
-            # Get final response
-            # The state is updated in the loop, but we can also just look at the last message
-            # However, app.stream yields updates. 
-            # Let's just print the final response from the last update if it's from the agent.
-            
-            # A simpler way for the user to see the final answer:
-            # The loop above shows progress.
-            # We can invoke it again or just rely on the stream.
-            # Let's just print a separator.
             print("-" * 50)
 
         except Exception as e:
             print(f"An error occurred: {e}")
-            print("Did you set your GOOGLE_API_KEY in .env?")
+            print("Did you set your GEMINI_API_KEY in .env?")
 
 if __name__ == "__main__":
     main()

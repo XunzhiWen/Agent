@@ -166,5 +166,10 @@ workflow.add_conditional_edges(
 
 workflow.add_edge("tools", "agent")
 
+from langgraph.checkpoint.memory import MemorySaver
+
+# ... (existing code)
+
 # 7. Compile
-app = workflow.compile()
+checkpointer = MemorySaver()
+app = workflow.compile(checkpointer=checkpointer)

@@ -98,7 +98,7 @@ google-genai
 
 ## 环境配置
 
-### 📄 `.env` (2行)
+### 📄 `.env` (该API_KEY已弃用)
 
 ```env
 GEMINI_API_KEY=AIzaSyCH257-Hn30gQOKDfHVwGgPICZ5IjO8DCU
